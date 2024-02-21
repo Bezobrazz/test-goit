@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="container">
-      {userData && <UserCard userData={userData} />}
+      {userData && <UserCard userData={userData} BASE_URL={BASE_URL} />}
     </div>
   );
 }
