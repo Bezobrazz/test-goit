@@ -6,7 +6,6 @@ const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 
 function App() {
   const [userData, setUserData] = useState(null);
-  console.log(userData);
 
   useEffect(() => {
     const fetchData = async () => {
