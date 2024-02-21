@@ -1,7 +1,9 @@
+import UserCard from "./components/UserCard/UserCard";
+
 function App() {
   return (
     <div className="container">
-      <h1>Hello</h1>
+      <UserCard />
     </div>
   );
 }
