@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import UserCard from "./components/UserCard/UserCard";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 
@@ -9,7 +8,6 @@ const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 
 function App() {
   const [followers, setFollowers] = useState({});
-  const [isActive, setIsActive] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [displayedUsers, setDisplayedUsers] = useState([]);
@@ -54,46 +52,13 @@ function App() {
     fetchData();
   }, [currentPage]);
 
-  useEffect(() => {
-    const storedIsActive = JSON.parse(localStorage.getItem("isActive")) || {};
-    setIsActive(storedIsActive);
-  }, []);
-
-  const handleClickActive = async (id) => {
-    const newIsActive = { ...isActive, [id]: !isActive[id] };
-    setIsActive(newIsActive);
-
-    setFollowers((prevFollowers) => ({
-      ...prevFollowers,
-      [id]: newIsActive[id] ? prevFollowers[id] + 1 : prevFollowers[id] - 1,
-    }));
-
-    const dataToSend = {
-      id: id,
-      followers: newIsActive[id] ? followers[id] + 1 : followers[id] - 1,
-    };
-
-    try {
-      const response = await axios.put(`${BASE_URL}/${id}`, dataToSend);
-      const message = newIsActive[id]
-        ? `You are following ${response.data.user}`
-        : `You unfollow ${response.data.user}`;
-      toast(message);
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-
-    localStorage.setItem("isActive", JSON.stringify(newIsActive));
-  };
-
   return (
     <div className="container">
-      <ToastContainer />
       <UserCard
         displayedUsers={displayedUsers}
         followers={followers}
-        isActive={isActive}
-        handleClickActive={handleClickActive}
+        setFollowers={setFollowers}
+        BASE_URL={BASE_URL}
       />
       <LoadMoreBtn
         totalUsers={totalUsers}
