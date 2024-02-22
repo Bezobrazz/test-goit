@@ -2,11 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { nanoid } from "nanoid";
 import s from "./App.module.css";
-import logo from "./assets/logo-goit.png";
-import mainImg from "./assets/main-img.png";
-import defaultAvatar from "./assets/default-avatar.jpg";
+import UserCard from "./components/UserCard/UserCard";
 
 const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 
@@ -89,10 +86,6 @@ function App() {
     localStorage.setItem("isActive", JSON.stringify(newIsActive));
   };
 
-  const formatFollowers = (count) => {
-    return count >= 10000 ? count.toLocaleString("en-US") : count;
-  };
-
   const handleLoadMore = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
@@ -101,36 +94,12 @@ function App() {
   return (
     <div className="container">
       <ToastContainer />
-      <div className={s.userCardWrapper}>
-        {displayedUsers.map((user) => (
-          <div className={s.userCard} key={nanoid()}>
-            <img className={s.logo} src={logo} alt="logo" />
-            <img className={s.mainImg} src={mainImg} alt="image" />
-            <div className={s.avatarBone}></div>
-            <div className={s.avatarImgWrapper}>
-              <img
-                className={s.avatarImg}
-                src={user.avatar ? user.avatar : defaultAvatar}
-                alt="user avatar"
-              />
-            </div>
-            <div className={s.informWrapper}>
-              <p className={s.userName}>{user.user}</p>
-              <p className={s.informTweets}>{user.tweets} tweets</p>
-              <p className={s.informFollowers}>
-                {followers[user.id] && formatFollowers(followers[user.id])}{" "}
-                Followers
-              </p>
-              <button
-                className={isActive[user.id] ? s.followBtnActive : s.followBtn}
-                onClick={() => handleClickActive(user.id)}
-              >
-                {isActive[user.id] ? "Following" : "Follow"}
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <UserCard
+        displayedUsers={displayedUsers}
+        followers={followers}
+        isActive={isActive}
+        handleClickActive={handleClickActive}
+      />
       {displayedUsers.length > 0 && (
         <button
           className={`${s.btnLoadMore} ${disabledBtn ? s.btnDisabled : ""}`}
