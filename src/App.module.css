@@ -106,6 +106,7 @@
   box-shadow: 0 3.4px 3.4px 0 rgba(0, 0, 0, 0.25);
   background-color: #ebd8ff;
   text-transform: uppercase;
+  font-weight: 600;
   margin-bottom: 36px;
 }
 .followBtnActive {
@@ -120,6 +121,7 @@
   box-shadow: 0 3.4px 3.4px 0 rgba(0, 0, 0, 0.25);
   background-color: #5cd3a8;
   text-transform: uppercase;
+  font-weight: 600;
   margin-bottom: 36px;
 }
 .btnLoadMore {
@@ -135,7 +137,15 @@
   box-shadow: 0 3.4px 3.4px 0 rgba(0, 0, 0, 0.25);
   background-color: #ebd8ff;
   text-transform: uppercase;
+  font-weight: 600;
   margin-bottom: 36px;
+}
+.btnLoadMore:hover {
+  background-color: #efe6f8;
+}
+.btnDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media screen and (min-width: 768px) {

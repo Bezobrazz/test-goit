@@ -16,12 +16,17 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [displayedUsers, setDisplayedUsers] = useState([]);
+  const [totalUsers, setTotalUsers] = useState([]);
+
   const usersPerPage = 3;
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        const totalUsers = await axios.get(BASE_URL);
+        setTotalUsers(totalUsers.data.length);
+
         const response = await axios.get(
           `${BASE_URL}?page=${currentPage}&limit=${usersPerPage}`
         );
@@ -55,11 +60,6 @@ function App() {
   useEffect(() => {
     const storedIsActive = JSON.parse(localStorage.getItem("isActive")) || {};
     setIsActive(storedIsActive);
-
-    const storedPage = localStorage.getItem("currentPage");
-    if (storedPage) {
-      setCurrentPage(parseInt(storedPage, 10));
-    }
   }, []);
 
   const handleClickActive = async (id) => {
@@ -94,11 +94,9 @@ function App() {
   };
 
   const handleLoadMore = () => {
-    setCurrentPage((prevPage) => {
-      localStorage.setItem("currentPage", prevPage + 1);
-      return prevPage + 1;
-    });
+    setCurrentPage((prevPage) => prevPage + 1);
   };
+  const disabledBtn = displayedUsers.length >= totalUsers;
 
   return (
     <div className="container">
@@ -133,10 +131,15 @@ function App() {
           </div>
         ))}
       </div>
-
-      <button className={s.btnLoadMore} onClick={handleLoadMore}>
-        Load More
-      </button>
+      {displayedUsers.length > 0 && (
+        <button
+          className={`${s.btnLoadMore} ${disabledBtn ? s.btnDisabled : ""}`}
+          onClick={handleLoadMore}
+          disabled={disabledBtn}
+        >
+          Load More
+        </button>
+      )}
     </div>
   );
 }
