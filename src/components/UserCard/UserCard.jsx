@@ -1,50 +1,79 @@
-/* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import s from "./UserCard.module.css";
 import logo from "../../assets/logo-goit.png";
 import mainImg from "../../assets/main-img.png";
 import defaultAvatar from "../../assets/default-avatar.jpg";
-import axios from "axios";
 
 const UserCard = ({ userData, BASE_URL }) => {
   const [followers, setFollowers] = useState({});
   const [isActive, setIsActive] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const usersPerPage = 3; // Кількість користувачів на сторінці
+  const [loading, setLoading] = useState(false);
+  const [displayedUsers, setDisplayedUsers] = useState([]);
 
   useEffect(() => {
-    const followersData = {};
-    userData.forEach((user) => {
-      followersData[user.id] = parseInt(user.followers, 10);
-    });
-    setFollowers(followersData);
-  }, [userData]);
+    fetchData();
+  }, [currentPage]); // Перезавантаження даних при зміні поточної сторінки
 
   useEffect(() => {
     const storedIsActive = JSON.parse(localStorage.getItem("isActive")) || {};
     setIsActive(storedIsActive);
   }, []);
 
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${BASE_URL}?page=${currentPage}&limit=${usersPerPage}`
+      );
+      setTotalPages(response.headers["x-total-pages"]);
+      const newFollowers = {};
+      response.data.forEach((user) => {
+        newFollowers[user.id] = parseInt(user.followers, 10);
+      });
+      setFollowers((prevFollowers) => ({ ...prevFollowers, ...newFollowers }));
+
+      if (currentPage === 1) {
+        setDisplayedUsers(response.data);
+      } else {
+        setDisplayedUsers((prevDisplayedUsers) => [
+          ...prevDisplayedUsers,
+          ...response.data,
+        ]);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleClickActive = async (id) => {
     const newIsActive = { ...isActive, [id]: !isActive[id] };
 
     setIsActive(newIsActive);
 
-    setFollowers((prevState) => ({
-      ...prevState,
-      [id]: newIsActive[id] ? prevState[id] + 1 : prevState[id] - 1,
+    setFollowers((prevFollowers) => ({
+      ...prevFollowers,
+      [id]: newIsActive[id] ? prevFollowers[id] + 1 : prevFollowers[id] - 1,
     }));
 
     const dataToSend = {
       id: id,
-      followers: isActive[id] ? followers[id] - 1 : followers[id] + 1,
+      followers: newIsActive[id] ? followers[id] + 1 : followers[id] - 1,
     };
 
     try {
       const response = await axios.put(`${BASE_URL}/${id}`, dataToSend);
-      !isActive[id]
-        ? toast(`You are folowing ${response.data.user}`)
-        : toast(`You unfollow ${response.data.user}`);
+      const message = newIsActive[id]
+        ? `You are following ${response.data.user}`
+        : `You unfollow ${response.data.user}`;
+      toast(message);
     } catch (error) {
       console.error("Error sending data:", error);
     }
@@ -60,10 +89,15 @@ const UserCard = ({ userData, BASE_URL }) => {
     }
   };
 
+  const handleLoadMore = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
   return (
     <>
       <ToastContainer />
-      {userData.map((user) => (
+
+      {displayedUsers.map((user) => (
         <div className={s.userCard} key={user.id}>
           <img className={s.logo} src={logo} alt="logo" />
           <img className={s.mainImg} src={mainImg} alt="image" />
@@ -91,6 +125,10 @@ const UserCard = ({ userData, BASE_URL }) => {
           </div>
         </div>
       ))}
+
+      <button className={s.btnLoadMore} onClick={handleLoadMore}>
+        Load More
+      </button>
     </>
   );
 };
