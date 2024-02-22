@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import s from "./App.module.css";
 import UserCard from "./components/UserCard/UserCard";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 
 const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 
@@ -86,11 +86,6 @@ function App() {
     localStorage.setItem("isActive", JSON.stringify(newIsActive));
   };
 
-  const handleLoadMore = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-  const disabledBtn = displayedUsers.length >= totalUsers;
-
   return (
     <div className="container">
       <ToastContainer />
@@ -100,15 +95,11 @@ function App() {
         isActive={isActive}
         handleClickActive={handleClickActive}
       />
-      {displayedUsers.length > 0 && (
-        <button
-          className={`${s.btnLoadMore} ${disabledBtn ? s.btnDisabled : ""}`}
-          onClick={handleLoadMore}
-          disabled={disabledBtn}
-        >
-          Load More
-        </button>
-      )}
+      <LoadMoreBtn
+        totalUsers={totalUsers}
+        displayedUsers={displayedUsers}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }
