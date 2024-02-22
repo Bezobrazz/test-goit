@@ -55,6 +55,11 @@ function App() {
   useEffect(() => {
     const storedIsActive = JSON.parse(localStorage.getItem("isActive")) || {};
     setIsActive(storedIsActive);
+
+    const storedPage = localStorage.getItem("currentPage");
+    if (storedPage) {
+      setCurrentPage(parseInt(storedPage, 10));
+    }
   }, []);
 
   const handleClickActive = async (id) => {
@@ -89,7 +94,10 @@ function App() {
   };
 
   const handleLoadMore = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    setCurrentPage((prevPage) => {
+      localStorage.setItem("currentPage", prevPage + 1);
+      return prevPage + 1;
+    });
   };
 
   return (
