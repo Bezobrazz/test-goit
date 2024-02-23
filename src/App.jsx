@@ -5,8 +5,8 @@ import UserCard from "./components/UserCard/UserCard";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import Tweets from "./pages/Tweets";
+import Home from "./pages/Home/Home";
+import Tweets from "./pages/Tweets/Tweets";
 
 const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 

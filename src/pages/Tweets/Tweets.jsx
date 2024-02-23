@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
-import UserCard from "../components/UserCard/UserCard";
+import s from "./Tweets.module.css";
+import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+import UserCard from "../../components/UserCard/UserCard";
 
 const Tweets = ({
   displayedUsers,
@@ -12,7 +13,9 @@ const Tweets = ({
 }) => {
   return (
     <div>
-      <Link to="/">Back</Link>
+      <Link className={s.backBtn} to="/">
+        Back
+      </Link>
       <UserCard
         displayedUsers={displayedUsers}
         followers={followers}
