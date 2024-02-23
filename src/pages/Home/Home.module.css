@@ -27,18 +27,18 @@
   font-size: 18px;
   margin-bottom: 36px;
 
-  animation: moveButton 0.5s infinite alternate; /* Викликаємо анімацію */
+  animation: moveButton 0.5s infinite alternate;
 }
 .homeBtn:hover {
   background-color: #efe6f8;
-  animation-play-state: paused; /* Зупиняємо анімацію при наведенні */
+  animation-play-state: paused;
 }
 @keyframes moveButton {
   from {
-    transform: translateX(-10px); /* Початкова позиція */
+    transform: translateX(-10px);
   }
   to {
-    transform: translateX(10px); /* Позиція після анімації */
+    transform: translateX(10px);
   }
 }
 .arrowIcon {
