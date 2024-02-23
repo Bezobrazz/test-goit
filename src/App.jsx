@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 
 import UserCard from "./components/UserCard/UserCard";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Tweets from "./pages/Tweets";
 
 const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 
@@ -54,17 +58,33 @@ function App() {
 
   return (
     <div className="container">
-      <UserCard
-        displayedUsers={displayedUsers}
-        followers={followers}
-        setFollowers={setFollowers}
-        BASE_URL={BASE_URL}
-      />
-      <LoadMoreBtn
+      <Routes>
+        <Route index path="/" element={<Home />} />
+        <Route
+          path="/tweets"
+          element={
+            <Tweets
+              displayedUsers={displayedUsers}
+              followers={followers}
+              setFollowers={setFollowers}
+              BASE_URL={BASE_URL}
+              totalUsers={totalUsers}
+              setCurrentPage={setCurrentPage}
+            />
+            // <UserCard
+            //   displayedUsers={displayedUsers}
+            //   followers={followers}
+            //   setFollowers={setFollowers}
+            //   BASE_URL={BASE_URL}
+            // />
+          }
+        />
+      </Routes>
+      {/* <LoadMoreBtn
         totalUsers={totalUsers}
         displayedUsers={displayedUsers}
         setCurrentPage={setCurrentPage}
-      />
+      /> */}
     </div>
   );
 }
