@@ -1,9 +1,9 @@
-
-
 # Welcome to: [User Tweet Cards](https://test-goit-six.vercel.app/) 🐥
 
 ## Description:
+
 [User Tweet Cards](https://test-goit-six.vercel.app/) is an application for viewing user tweet cards, which provides users with the ability to view tweet cards with the following information:
+
 - User avatar
 - User name
 - Number of tweets
@@ -23,15 +23,19 @@
 5. **Back Button**: The app includes a back button that allows users to easily navigate back to the home page from "tweets" page.
 
 ## Technologies Used:
+
 - **React**: Leveraging the power of React for dynamic and efficient UI rendering.
 
 - **Axios**: Making asynchronous HTTP requests for seamless data fetching.
+
+- **MokAPI.io**: For creating mock APIs and simulating backend functionality.
 
 - **Vite**: A fast, opinionated web dev build tool that serves your code via native ES Module imports during development, and bundles it with Rollup for production.
 
 - **Vercel**: Deploying your app with Vercel for a seamless and scalable hosting solution.
 
 ## How to Use:
+
 1. Clone the repository to your computer.
 2. Install the necessary dependencies using **npm install**.
 3. Run the app using **npm run dev**.
