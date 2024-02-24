@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Tweets from "./pages/Tweets/Tweets";
+import { toast } from "react-toastify";
 
 const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 
@@ -43,6 +44,7 @@ function App() {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        toast.error(`Something went wrong... ${error.message}`);
       }
     };
 
