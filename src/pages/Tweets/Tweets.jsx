@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import s from "./Tweets.module.css";
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";

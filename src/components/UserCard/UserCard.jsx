@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { ToastContainer, toast } from "react-toastify";

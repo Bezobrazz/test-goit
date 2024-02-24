@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import s from "./LoadMoreBtn.module.css";
 
 const LoadMoreBtn = ({ setCurrentPage, displayedUsers, totalUsers }) => {

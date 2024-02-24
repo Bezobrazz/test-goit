@@ -9,7 +9,6 @@ const BASE_URL = "https://65d4fa523f1ab8c634366212.mockapi.io/users";
 function App() {
   const [followers, setFollowers] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [displayedUsers, setDisplayedUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState([]);
   const [filter, setFilter] = useState("show all");
@@ -18,7 +17,6 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
         const totalUsers = await axios.get(BASE_URL);
         setTotalUsers(totalUsers.data.length);
@@ -45,8 +43,6 @@ function App() {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
       }
     };
 

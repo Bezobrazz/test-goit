@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import s from "./Filter.module.css";
 
 const Filter = ({ handleFilterChange, filter }) => {
@@ -8,6 +9,11 @@ const Filter = ({ handleFilterChange, filter }) => {
       <option value="following">Following</option>
     </select>
   );
+};
+
+Filter.propTypes = {
+  handleFilterChange: PropTypes.func.isRequired,
+  filter: PropTypes.oneOf(["show all", "follow", "following"]).isRequired,
 };
 
 export default Filter;
