@@ -10,6 +10,8 @@
 - Subscribers
 - "Follow" Button
 
+> ### It has 33 users on 11 pages
+
 ## Key Features:
 
 1. **Follow Button Functionality**: Users can click the "Follow" button on a tweet card to follow that user. This action increases the number of subscribers by 1 and changes the color of the button to indicate that the user is being followed.
