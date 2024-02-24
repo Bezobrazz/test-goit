@@ -16,10 +16,13 @@ const Tweets = ({
 }) => {
   return (
     <div>
-      <Filter handleFilterChange={handleFilterChange} filter={filter} />
-      <Link className={s.backBtn} to="/">
-        Back
-      </Link>
+      <div className={s.filterWrapper}>
+        <Link className={s.backBtn} to="/">
+          Back
+        </Link>
+        <Filter handleFilterChange={handleFilterChange} filter={filter} />
+      </div>
+
       <UserCard
         displayedUsers={displayedUsers}
         followers={followers}

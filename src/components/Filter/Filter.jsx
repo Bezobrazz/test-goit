@@ -1,6 +1,8 @@
+import s from "./Filter.module.css";
+
 const Filter = ({ handleFilterChange, filter }) => {
   return (
-    <select value={filter} onChange={handleFilterChange}>
+    <select className={s.select} value={filter} onChange={handleFilterChange}>
       <option value="show all">Show All</option>
       <option value="follow">Follow</option>
       <option value="following">Following</option>
