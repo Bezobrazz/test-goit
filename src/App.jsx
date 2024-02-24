@@ -12,8 +12,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [displayedUsers, setDisplayedUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState([]);
+  const [filter, setFilter] = useState("show all");
 
-  const usersPerPage = 3;
+  let usersPerPage = 3;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +51,11 @@ function App() {
     };
 
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, usersPerPage]);
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
 
   return (
     <div className="container">
@@ -66,6 +71,8 @@ function App() {
               BASE_URL={BASE_URL}
               totalUsers={totalUsers}
               setCurrentPage={setCurrentPage}
+              handleFilterChange={handleFilterChange}
+              filter={filter}
             />
           }
         />

@@ -8,7 +8,13 @@ import logo from "../../assets/logo-goit.png";
 import mainImg from "../../assets/main-img.png";
 import defaultAvatar from "../../assets/default-avatar.jpg";
 
-const UserCard = ({ displayedUsers, followers, setFollowers, BASE_URL }) => {
+const UserCard = ({
+  displayedUsers,
+  followers,
+  setFollowers,
+  BASE_URL,
+  filter,
+}) => {
   const [isActive, setIsActive] = useState({});
 
   const handleClickActive = async (id) => {
@@ -46,11 +52,19 @@ const UserCard = ({ displayedUsers, followers, setFollowers, BASE_URL }) => {
   const formatFollowers = (count) => {
     return count >= 10000 ? count.toLocaleString("en-US") : count;
   };
+
+  const filterUser = (user) => {
+    if (filter === "show all") return true;
+    if (filter === "follow") return !isActive[user.id];
+    if (filter === "following") return isActive[user.id];
+    return true;
+  };
+
   return (
     <>
       <ToastContainer />
       <div className={s.userCardWrapper}>
-        {displayedUsers.map((user) => (
+        {displayedUsers.filter(filterUser).map((user) => (
           <div className={s.userCard} key={nanoid()}>
             <img className={s.logo} src={logo} alt="logo" />
             <img className={s.mainImg} src={mainImg} alt="image" />
